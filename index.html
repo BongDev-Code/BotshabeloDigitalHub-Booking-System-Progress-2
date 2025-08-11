@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botshabelo Hub Booking System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+     Login Screen (initially hidden) 
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-logo">
+                    <div class="logo-circle">🔒</div>
+                </div>
+                <h1>Botshabelo Digital Hub</h1>
+                <p>Booking System Access</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div id="loginError" class="login-error" style="display: none;"></div>
+                
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"></span>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon"></span>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        <button type="button" id="togglePassword" class="toggle-password"></button>
+                    </div>
+                </div>
+                
+                <button type="submit" id="loginBtn" class="btn-login">Sign In</button>
+                
+                <div class="demo-credentials">
+                    <p>Demo Credentials:</p>
+                    <div class="credentials-box">
+                        Email: receptionist@botshabelo.com<br>
+                        Password: admin123
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+     Main Application (initially hidden) 
+    <div id="mainApp" style="display: none;">
+        <header>
+            <img src="assets/logo/logo.png" alt="Botshabelo Digital Hub Logo" class="logo-img" aria-label="Botshabelo Digital Hub Logo" />
+            <div class="logo">Botshabelo <span>Digital Hub</span></div>
+            <nav>
+                <a href="#" onclick="showSection('bookings')" id="bookingsTab" class="nav-active">📅 Bookings</a>
+                <a href="#" onclick="showSection('reminders')" id="remindersTab">🔔 Reminders</a>
+                <span class="user-info">Welcome, <span id="currentUser">User</span></span>
+                <button onclick="logout()" class="logout-btn">🚪 Logout</button>
+            </nav>
+        </header>
+
+         Reminders Section 
+        <div id="remindersSection" class="main-section" style="display: none;">
+            <div class="reminders-container">
+                <div class="reminders-header">
+                    <div class="header-content">
+                        <h1>🔔 Event Reminders</h1>
+                        <p>Manage upcoming event notifications</p>
+                    </div>
+                    <div class="reminders-count">
+                        <span id="pendingCount">0</span> Pending
+                    </div>
+                </div>
+                
+                <div id="remindersContent">
+                    <div id="noReminders" class="no-reminders">
+                        <div class="no-reminders-icon">✅</div>
+                        <p>No pending reminders at this time. All caught up! 🎉</p>
+                    </div>
+                    
+                    <div id="remindersList" class="reminders-list"></div>
+                </div>
+            </div>
+        </div>
+
+         Original Booking System 
+        <div id="bookingsSection" class="main-section">
+            <main>
+                <h1 class="system-title">Reception</h1>
+                <section class="booking-section">
+                    <h1>Book an Event</h1>
+                    <form id="bookingForm" aria-label="Booking Form">
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category" required aria-required="true">
+                                <option value="">Select Category</option>
+                                <option value="Corporates">Corporates</option>
+                                <option value="Industrialists">Industrialists</option>
+                                <option value="Government">Government</option>
+                                <option value="Academia">Academia</option>
+                                <option value="NGOs/CBOs">NGOs/CBOs</option>
+                                <option value="General SMMEs">General SMMEs</option>
+                                <option value="Incubated SMMEs">Incubated SMMEs</option>
+                                <option value="Tenants">Tenants</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="event">Event Title</label>
+                            <input type="text" id="event" name="event" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="people">Number of People:</label>
+                            <input type="number" id="people" min="1" value="1" />
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Time</label>
+                            <input type="time" id="time" name="time" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="reminder">Reminder</label>
+                            <select id="reminder" name="reminder" aria-label="Reminder Time">
+                                <option value="1day">1 day before</option>
+                                <option value="1hour">1 hour before</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">Book Now</button>
+                        <button type="button" id="cancelEdit" class="btn-cancel" style="display:none;">Cancel</button>
+                    </form>
+                </section>
+                <section class="cost-section">
+                    <h2>Booking Costs</h2>
+                    <form id="costCalcForm" aria-label="Cost Calculator">
+                        <div class="form-group">
+                            <label for="facility">Facility/Service</label>
+                            <select id="facility" name="facility" required aria-required="true">
+                                <option value="">Select Facility/Service</option>
+                                <option value="Office">Office (per month)</option>
+                                <option value="Hot-Desk-Day">Hot-Desk (per day)</option>
+                                <option value="Hot-Desk-Month">Hot-Desk (per month)</option>
+                                <option value="Board Room">Board Room (per hour)</option>
+                                <option value="Meeting Room">Meeting Room (per hour)</option>
+                                <option value="Auditorium">Auditorium/Exhibition Area (per hour)</option>
+                                <option value="PC Labs">PC Labs (per hour)</option>
+                                <option value="Makerspace">Air/Lab Makerspace (per hour)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="durationGroup">
+                            <label for="duration" id="durationLabel">Duration/Quantity</label>
+                            <input type="number" id="duration" name="duration" min="1" value="1" required aria-required="true">
+                        </div>
+                        <div class="form-group" id="extraOptions">
+                            <label>Extra Services</label>
+                            <div>
+                                <input type="checkbox" id="extraProjector" name="extraProjector" value="Projector">
+                                <label for="extraProjector">Projector (+R100)</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="extraCatering" name="extraCatering" value="Catering">
+                                <label for="extraCatering">Catering (+R50 per person)</label>
+                                <input type="number" id="cateringPeople" name="cateringPeople" min="1" value="1" style="width:60px;display:none;">
+                            </div>
+                            <div>
+                                <input type="checkbox" id="extraInternet" name="extraInternet" value="Internet">
+                                <label for="extraInternet">Internet (+R30)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cost Breakdown:</label>
+                            <div id="costBreakdown" style="font-size:0.95rem;color:#333;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Cost:</label>
+                            <span id="costResult">R0.00</span>
+                        </div>
+                    </form>
+                    <div id="bookingSummary" style="margin-top:18px;display:none;"></div>
+                </section>
+                <aside class="ondemand-section">
+                    <h2>On-Demand Services & Costs</h2>
+                    <div class="ondemand-table-wrapper">
+                        <table class="ondemand-table" aria-label="On-Demand Services Table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Printing B&W (per page)</th>
+                                    <th>Printing B&W (per page) without paper</th>
+                                    <th>Printing Colour (per page)</th>
+                                    <th>Printing B&W (per page) without paper</th>
+                                    <th>Binding (with material)</th>
+                                    <th>Binding (without material)</th>
+                                    <th>Laminating (with material)</th>
+                                    <th>Laminating (without material)</th>
+                                    <th>Scanning (A4)</th>
+                                    <th>Scanning (A3)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Corporates</td><td>R1.00</td><td>R1.50</td><td>R2.00</td><td>R3.00</td><td>R8.00</td><td>R15.00</td><td>R8.00</td><td>R15.00</td><td>R2.00</td><td>R5.00</td></tr>
+                                <tr><td>Industrialists</td><td>R1.00</td><td>R1.50</td><td>R2.00</td><td>R3.00</td><td>R8.00</td><td>R15.00</td><td>R8.00</td><td>R15.00</td><td>R2.00</td><td>R5.00</td></tr>
+                                <tr><td>Government</td><td>R1.00</td><td>R1.50</td><td>R2.00</td><td>R3.00</td><td>R8.00</td><td>R15.00</td><td>R8.00</td><td>R15.00</td><td>R2.00</td><td>R5.00</td></tr>
+                                <tr><td>Academia</td><td>R1.00</td><td>R1.50</td><td>R2.00</td><td>R3.00</td><td>R8.00</td><td>R15.00</td><td>R8.00</td><td>R15.00</td><td>R2.00</td><td>R5.00</td></tr>
+                                <tr><td>NGOs/CBOs</td><td>R1.00</td><td>R1.50</td><td>R2.00</td><td>R3.00</td><td>R8.00</td><td>R15.00</td><td>R8.00</td><td>R15.00</td><td>R2.00</td><td>R5.00</td></tr>
+                                <tr><td>General SMMEs</td><td>R1.00</td><td>R1.50</td><td>R2.00</td><td>R3.00</td><td>R8.00</td><td>R15.00</td><td>R8.00</td><td>R15.00</td><td>R2.00</td><td>R5.00</td></tr>
+                                <tr><td>Incubated SMMEs</td><td>R1.00</td><td>R1.50</td><td>R2.00</td><td>R3.00</td><td>R8.00</td><td>R15.00</td><td>R8.00</td><td>R15.00</td><td>R2.00</td><td>R5.00</td></tr>
+                                <tr><td>Tenants</td><td>R1.00</td><td>R1.50</td><td>R2.00</td><td>R3.00</td><td>R8.00</td><td>R15.00</td><td>R8.00</td><td>R15.00</td><td>R2.00</td><td>R5.00</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </aside>
+                <section class="calendar-section">
+                    <div class="calendar-controls">
+                        <input type="text" id="searchInput" placeholder="Search by event or name..." aria-label="Search Bookings">
+                        <input type="date" id="filterDate" aria-label="Filter by Date">
+                        <button id="exportCSV" class="btn-primary" aria-label="Export to CSV">Export to CSV</button>
+                    </div>
+                    <h2>Upcoming Bookings</h2>
+                    <div id="calendarGrid"></div>
+                    <div id="calendar"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+    <footer>
+        <p>&copy; 2025 Botshabelo Digital Hub. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
