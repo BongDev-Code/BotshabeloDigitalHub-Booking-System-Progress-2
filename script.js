@@ -1,3 +1,5 @@
+const API_BASE_URL = 'http://localhost:3001/api'; // Your backend server URL
+
 // Authentication and Session Management
 let currentUser = null
 
