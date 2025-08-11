@@ -726,7 +726,7 @@ const PRICE_TABLE = {
     "Hot-Desk-Month": 1500,
     "Board Room": 60,
     "Meeting Room": 30,
-    Auditorium: 3300,
+    Auditorium: 40,
     "PC Labs": 90,
     Makerspace: 170,
   },
