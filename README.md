@@ -1,0 +1,1 @@
+This is a company booking system that will make things easier for the receptionist to keep things on track, it has a calender to display events and has reminder a day before the event , it calculates the total amount to be paid automatically. This will save time and make things easy and it is fast
